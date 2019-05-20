@@ -57,17 +57,17 @@ export const reducer = (state, action) => {
         };
       }
     case actions.UNDO:
-      return {
-        ...state,
-        isGameOver: false,
-        winningCells: [],
-        moves:
-          // erase last moves except initial one
-          state.moves.length > 1
-            ? state.moves.slice(0, state.moves.length - 1)
-            : state.moves,
-        currentPlayer: state.currentPlayer === 1 ? 2 : 1,
-      };
+      if (state.moves.length > 1) {
+        return {
+          ...state,
+          isGameOver: false,
+          winningCells: [],
+          moves: state.moves.slice(0, state.moves.length - 1),
+          currentPlayer: state.currentPlayer === 1 ? 2 : 1,
+        };
+      } else {
+        return { ...state };
+      }
     case actions.SWAP_ICON:
       return {
         ...state,
